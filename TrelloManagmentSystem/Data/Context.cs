@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TrelloManagmentSystem.Models;
 
 namespace TrelloManagmentSystem.Data
 {
-    public class Context: DbContext
+    public class Context : IdentityDbContext<AppUser>
     {
         public Context() 
         {
