@@ -7,6 +7,9 @@
         public string Message { get; set; }
         public ErrorCode errorCode { get; set; }
 
+     
+
+
         public static ResultViewModel<T> Success(T data, string message="")
         {
             return new ResultViewModel<T>
@@ -30,4 +33,26 @@
         }
 
     }
-}
+
+
+
+    public class ResultViewModel
+    {
+
+        public bool IsSuccess { get; set; } = true;
+        public bool IsFailure => !IsSuccess;
+        public ErrorCode errorCode { get; set; } = default!;
+
+
+        public ResultViewModel(bool isSuccess, ErrorCode errorCode)
+        {
+            IsSuccess = isSuccess;
+            errorCode = errorCode;
+        }
+
+        public static ResultViewModel Success() => new(true, ErrorCode.None);
+        public static ResultViewModel Failure(ErrorCode errorCode) => new(false, errorCode);
+
+    }
+
+    }
