@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using TrelloManagmentSystem.Models;
 
 namespace TrelloManagmentSystem.Data
@@ -14,5 +16,10 @@ namespace TrelloManagmentSystem.Data
         {
             
         }
+    public DbSet<Tasks> Tacks { get; set; }
+		public DbSet<Project> Projects { get; set; }
+
+		public DbSet<ApplicationUser> applicationUsers { get; set; }
     }
+
 }
