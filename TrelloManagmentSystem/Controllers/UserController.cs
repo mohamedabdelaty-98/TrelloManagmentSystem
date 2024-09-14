@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Project_management_system.CQRS.User.Commands;
-using Project_management_system.ViewModels;
-using TrelloManagmentSystem.ViewModels;
+  using TrelloManagmentSystem.ViewModels;
 
 namespace TrelloManagmentSystem.Controllers
 {
@@ -22,7 +21,7 @@ namespace TrelloManagmentSystem.Controllers
 			{
 				return Ok("Password successfully.");
 			}
-			return BadRequest("Invalid token or error resetting password.");
+			return BadRequest("Invalid token");
 		}
 
 

@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Project_management_system.CQRS.User.Queries;
+using TrelloManagmentSystem.CQRS.User.Queries;
 using TrelloManagmentSystem.Exceptions;
 using TrelloManagmentSystem.Repositories.GenericRepositories;
 
-namespace Project_management_system.CQRS.User.Commands
+namespace TrelloManagmentSystem.CQRS.User.Commands
 {
-    public record VerifyOTPCommand(string email,string otpCode):IRequest<bool>
+	public record VerifyOTPCommand(string email,string otpCode):IRequest<bool>
     {
     }
     public record VerifyOTPHandler : IRequestHandler<VerifyOTPCommand, bool>
