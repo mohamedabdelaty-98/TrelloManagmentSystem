@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project_management_system.CQRS.User.Commands;
 using Project_management_system.ViewModels;
+using TrelloManagmentSystem.ViewModels;
 
 namespace TrelloManagmentSystem.Controllers
 {
@@ -33,7 +34,7 @@ namespace TrelloManagmentSystem.Controllers
 			{
 				return BadRequest("email is not verified");
 			}
-			return Ok(ResultVM<bool>.Sucess(true, "email verified successfully"));
+			return Ok(ResultViewModel<bool>.Success(true, "email verified successfully"));
 		}
 	}
 
