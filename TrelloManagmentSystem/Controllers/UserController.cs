@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project_management_system.CQRS.User.Commands;
 using Project_management_system.ViewModels;
+using TrelloManagmentSystem.ViewModels;
 
 namespace TrelloManagmentSystem.Controllers
 {
@@ -19,7 +20,7 @@ namespace TrelloManagmentSystem.Controllers
 			var result = await _mediator.Send(command);
 			if (result)
 			{
-				return Ok("Password has been reset successfully.");
+				return Ok("Password successfully.");
 			}
 			return BadRequest("Invalid token or error resetting password.");
 		}
@@ -33,7 +34,7 @@ namespace TrelloManagmentSystem.Controllers
 			{
 				return BadRequest("email is not verified");
 			}
-			return Ok(ResultVM<bool>.Sucess(true, "email verified successfully"));
+			return Ok(ResultViewModel<bool>.Success(true, "email verified successfully"));
 		}
 	}
 
