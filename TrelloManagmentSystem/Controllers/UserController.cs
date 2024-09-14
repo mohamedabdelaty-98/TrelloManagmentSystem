@@ -20,7 +20,7 @@ namespace TrelloManagmentSystem.Controllers
 			var result = await _mediator.Send(command);
 			if (result)
 			{
-				return Ok("Password has been reset successfully.");
+				return Ok("Password successfully.");
 			}
 			return BadRequest("Invalid token or error resetting password.");
 		}
