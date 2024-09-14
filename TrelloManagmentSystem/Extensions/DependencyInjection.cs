@@ -1,44 +1,37 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SurveyBasket.ApI.JwtService;
 using System.Reflection;
 using System.Text;
 using TrelloManagmentSystem.Data;
 using TrelloManagmentSystem.Models;
+using TrelloManagmentSystem.Services;
 
-namespace TrelloManagmentSystem
+namespace TrelloManagmentSystem.Extensions
 {
-    public static class Configrations
+    public static class DependencyInjection
     {
-        public static WebApplicationBuilder AutoFacConfigration(this WebApplicationBuilder builder)
+        public static IServiceCollection AddServicesDependencies(this IServiceCollection services , IConfiguration configuration)
         {
-            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-            builder.Host.ConfigureContainer<ContainerBuilder>(containrbuilder =>
-            {
-                containrbuilder.RegisterModule(new AutoFacModule(builder.Configuration));
-            });
-            return builder;
-        }
-        public static WebApplicationBuilder AddServicesDependencies(this WebApplicationBuilder builder, IConfiguration configuration)
-        {
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
 
-            builder.AddIdentityServicesConfig(configuration);
-            builder.AddFluentValidationConfigration();
-            builder.AddSwaggerDocumentationServices();
-            return builder;
+            services.AddIdentityServicesConfig(configuration);
+            services.AddFluentValidationConfigration();
+            services.AddSwaggerDocumentationServices();
+            return services;
         }
-        private static WebApplicationBuilder AddSwaggerDocumentationServices(this WebApplicationBuilder builder)
+
+        private static IServiceCollection AddSwaggerDocumentationServices(this IServiceCollection services)
         {
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(C =>
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(C =>
             {
                 var SecuritySchema = new OpenApiSecurityScheme
                 {
@@ -65,28 +58,28 @@ namespace TrelloManagmentSystem
 
                 C.AddSecurityRequirement(ScurityRequirments);
             });
-            return builder;
+            return services;
 
 
 
         }
 
 
-        private static WebApplicationBuilder AddFluentValidationConfigration(this WebApplicationBuilder builder)
+        private static IServiceCollection AddFluentValidationConfigration(this IServiceCollection services)
         {
-            builder.Services.AddFluentValidationAutoValidation()
+            services.AddFluentValidationAutoValidation()
                         .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            return builder;
+                             return services;
         }
 
 
-        private static WebApplicationBuilder AddIdentityServicesConfig(this WebApplicationBuilder builder, IConfiguration configuration)
+        private static IServiceCollection AddIdentityServicesConfig(this IServiceCollection services, IConfiguration configuration)
         {
             //services.AddScoped<IAuthService, AuthServices>();
             //services.AddSingleton<IJwtProvider, JwtProvider>();
 
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser , IdentityRole>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 
@@ -94,7 +87,7 @@ namespace TrelloManagmentSystem
 
 
 
-            builder.Services.AddAuthentication(option =>
+            services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -114,7 +107,8 @@ namespace TrelloManagmentSystem
                     };
                 });
 
-            return builder;
+            return services;
         }
+
     }
 }

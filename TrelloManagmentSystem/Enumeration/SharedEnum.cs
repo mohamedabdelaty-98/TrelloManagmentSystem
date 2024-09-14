@@ -6,4 +6,6 @@
 	NoError,
 	UserEmailNotFound,
 	InvalidOTP,
+    InvalidCredentials,
+    PasswordChangeFailed
 }

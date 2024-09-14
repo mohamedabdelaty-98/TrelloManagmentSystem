@@ -6,17 +6,20 @@ using TrelloManagmentSystem.Models;
 
 namespace TrelloManagmentSystem.Data
 {
-	public class Context : IdentityDbContext<ApplicationUser>
-	{
-		public Context() { }
-		public Context(DbContextOptions<Context> options) : base(options)
-		{
-			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
-		}
+    public class Context : IdentityDbContext<AppUser>
+    {
+        public Context() 
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
+        }
+        public Context(DbContextOptions<Context> options):base(options)
+        {
+            
+        }
+        public DbSet<Tasks> Tasks { get; set; }
+		public DbSet<Project> Project { get; set; }
+        //public int MyProperty { get; set; }
 
-		public DbSet<Tasks> Tacks { get; set; }
-		public DbSet<Project> Projects { get; set; }
+    }
 
- 
-	}
 }

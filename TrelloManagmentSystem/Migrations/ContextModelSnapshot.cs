@@ -155,7 +155,7 @@ namespace TrelloManagmentSystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TrelloManagmentSystem.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TrelloManagmentSystem.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -173,6 +173,14 @@ namespace TrelloManagmentSystem.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -246,12 +254,15 @@ namespace TrelloManagmentSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("TrelloManagmentSystem.Models.Tasks", b =>
@@ -272,7 +283,7 @@ namespace TrelloManagmentSystem.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProjectsId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("Statues")
@@ -285,9 +296,9 @@ namespace TrelloManagmentSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectsId");
+                    b.HasIndex("ProjectId");
 
-                    b.ToTable("Tacks");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -301,7 +312,7 @@ namespace TrelloManagmentSystem.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TrelloManagmentSystem.Models.ApplicationUser", null)
+                    b.HasOne("TrelloManagmentSystem.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -310,7 +321,7 @@ namespace TrelloManagmentSystem.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TrelloManagmentSystem.Models.ApplicationUser", null)
+                    b.HasOne("TrelloManagmentSystem.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,7 +336,7 @@ namespace TrelloManagmentSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TrelloManagmentSystem.Models.ApplicationUser", null)
+                    b.HasOne("TrelloManagmentSystem.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -334,18 +345,66 @@ namespace TrelloManagmentSystem.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TrelloManagmentSystem.Models.ApplicationUser", null)
+                    b.HasOne("TrelloManagmentSystem.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TrelloManagmentSystem.Models.AppUser", b =>
+                {
+                    b.OwnsMany("SurveyBasket.ApI.Entities.RefreshTokens", "RefreshTokens", b1 =>
+                        {
+                            b1.Property<string>("AppUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime>("CreatedOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("ExpiresOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime?>("RevokedOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Token")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("AppUserId", "Id");
+
+                            b1.ToTable("RefreshTokens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AppUserId");
+                        });
+
+                    b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("TrelloManagmentSystem.Models.Project", b =>
+                {
+                    b.HasOne("TrelloManagmentSystem.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TrelloManagmentSystem.Models.Tasks", b =>
                 {
                     b.HasOne("TrelloManagmentSystem.Models.Project", "Projects")
-                        .WithMany("tasks")
-                        .HasForeignKey("ProjectsId")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -354,7 +413,7 @@ namespace TrelloManagmentSystem.Migrations
 
             modelBuilder.Entity("TrelloManagmentSystem.Models.Project", b =>
                 {
-                    b.Navigation("tasks");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

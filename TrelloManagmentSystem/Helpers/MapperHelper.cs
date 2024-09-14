@@ -6,6 +6,7 @@ namespace TrelloManagmentSystem.Helpers
     public static class MapperHelper 
     {
         public static IMapper mapper { get; set; }
+
         public static IEnumerable<TResult> Map<TResult>(this IQueryable source)
             => source.ProjectTo<TResult>(mapper.ConfigurationProvider);
 

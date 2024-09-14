@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurveyBasket.ApI.JwtService;
 using System.Diagnostics;
 using TrelloManagmentSystem.Data;
 using TrelloManagmentSystem.Repositories.GenericRepositories;
+using TrelloManagmentSystem.Services;
 
 
 namespace TrelloManagmentSystem
@@ -36,5 +38,9 @@ namespace TrelloManagmentSystem
 				cfg.AddProfile<Profiles>();
 			}).CreateMapper()).As<IMapper>().InstancePerLifetimeScope();
 		}
+            builder.RegisterType(typeof(AuthService)).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType(typeof(JwtProvider)).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType(typeof(UserService)).AsImplementedInterfaces().InstancePerLifetimeScope();
+        }
     }
 }
