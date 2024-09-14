@@ -38,9 +38,9 @@ namespace TrelloManagmentSystem
 				cfg.AddProfile<Profiles>();
 			}).CreateMapper()).As<IMapper>().InstancePerLifetimeScope();
 		}
-            builder.RegisterType(typeof(AuthService)).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType(typeof(JwtProvider)).AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType(typeof(UserService)).AsImplementedInterfaces().InstancePerLifetimeScope();
-        }
+            //builder.RegisterType(typeof(AuthService)).AsImplementedInterfaces().InstancePerLifetimeScope();
+            //builder.RegisterType(typeof(JwtProvider)).AsImplementedInterfaces().InstancePerLifetimeScope();
+            //builder.RegisterType(typeof(UserService)).AsImplementedInterfaces().InstancePerLifetimeScope();
+        
     }
 }
