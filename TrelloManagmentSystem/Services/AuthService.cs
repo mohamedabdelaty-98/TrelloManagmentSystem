@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using SurveyBasket.ApI.Entities;
 using SurveyBasket.ApI.JwtService;
 using System.Security.Cryptography;
 using TrelloManagmentSystem.Contracts.Login;
-using TrelloManagmentSystem.Migrations;
 using TrelloManagmentSystem.Models;
 using TrelloManagmentSystem.ViewModels;
 

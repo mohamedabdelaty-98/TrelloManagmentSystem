@@ -18,21 +18,7 @@ namespace TrelloManagmentSystem
         {
             var builder = WebApplication.CreateBuilder(args);
              builder.AutoFacConfigration();
-            builder.Services.AddServicesDependencies(builder.Configuration);
-
-
-
-            builder.Services.AddControllers();
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-			 
-
-
-
-			builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.AutoFacConfigration();
+            builder.AddServicesDependencies(builder.Configuration);
 
             var app = builder.Build();
             MapperHelper.mapper = app.Services.GetService<IMapper>();

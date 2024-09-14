@@ -6,6 +6,7 @@
 		public string Description { get; set; }
 		public string Statues { get; set; }
 		public DateTime DateCreated { get; set; }
-		public Project Projects { get; set; } = null!;
+        public int ProjectId { get; set; }
+        public Project? Projects { get; set; }
 	}
 }
