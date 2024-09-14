@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TrelloManagmentSystem.Repositories.GenericRepositories;
 using Entity = TrelloManagmentSystem.Models;
 
-namespace Project_management_system.CQRS.User.Commands
+namespace TrelloManagmentSystem.CQRS.User.Commands
 {
     public record ResetPasswordCommand(string Email, string Otp, string NewPassword, string ConfirmPassword) : IRequest<bool>;
 

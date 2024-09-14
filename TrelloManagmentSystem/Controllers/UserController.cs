@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Project_management_system.CQRS.User.Commands;
-using Project_management_system.ViewModels;
+using TrelloManagmentSystem.CQRS.User.Commands;
+using TrelloManagmentSystem.DTO;
 using TrelloManagmentSystem.ViewModels;
 
 namespace TrelloManagmentSystem.Controllers
@@ -14,28 +14,31 @@ namespace TrelloManagmentSystem.Controllers
 		{
 			_mediator = mediator;
 		}
-		[HttpPost("reset")]
-		public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+		[HttpPost("resetPassword")]
+		public async Task<IActionResult> ResetPassword([FromBody] TrelloManagmentSystem.CQRS.User.Commands.ResetPasswordCommand command)
 		{
 			var result = await _mediator.Send(command);
 			if (result)
 			{
 				return Ok("Password successfully.");
 			}
-			return BadRequest("Invalid token or error resetting password.");
+			return BadRequest("Invalid token");
 		}
 
-
 		[HttpGet("VerifyEmail")]
-		public async Task<IActionResult> VerifyEmail(string email, string otpCode)
+		public async Task<IActionResult> VerifyEmail([FromBody] TrelloManagmentSystem.CQRS.User.Commands.VerifyOTPCommand ResetPasswordDto)
 		{
-			var isVerified = await _mediator.Send(new VerifyOTPCommand(email, otpCode));
+			var isVerified = await _mediator.Send(ResetPasswordDto);
 			if (!isVerified)
 			{
 				return BadRequest("email is not verified");
 			}
 			return Ok(ResultViewModel<bool>.Success(true, "email verified successfully"));
 		}
+
+
+		 
+
 	}
 
 

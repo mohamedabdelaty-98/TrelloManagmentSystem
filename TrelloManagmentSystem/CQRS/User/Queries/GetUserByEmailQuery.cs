@@ -3,7 +3,7 @@
 using TrelloManagmentSystem.Exceptions;
 using TrelloManagmentSystem.Repositories.GenericRepositories;
  
-namespace Project_management_system.CQRS.User.Queries
+namespace TrelloManagmentSystem.CQRS.User.Queries
 {
     public record GetUserByEmailQuery(string email):IRequest<TrelloManagmentSystem.Models.User>
     {
