@@ -6,7 +6,7 @@ using TrelloManagmentSystem.Models;
 
 namespace TrelloManagmentSystem.Data
 {
-	public class Context : IdentityDbContext<IdentityUser>
+	public class Context : IdentityDbContext<ApplicationUser>
 	{
 		public Context() { }
 		public Context(DbContextOptions<Context> options) : base(options)
@@ -17,7 +17,6 @@ namespace TrelloManagmentSystem.Data
 		public DbSet<Tasks> Tacks { get; set; }
 		public DbSet<Project> Projects { get; set; }
 
-		public DbSet<ApplicationUser> applicationUsers { get; set; }
-
+ 
 	}
 }

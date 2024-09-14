@@ -7,5 +7,7 @@
 		public string Statues  { get; set; }
 		public DateTime DateCreated  { get; set; }
 		public int UserId  { get; set; }
- 	}
+		public ICollection<Tasks> tasks { get; set; } = new HashSet<Tasks>();
+
+	}
 }

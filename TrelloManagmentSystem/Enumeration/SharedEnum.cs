@@ -3,4 +3,7 @@
     None = 0,
     UnKnown = 1,
     DoesNotExist,
+	NoError,
+	UserEmailNotFound,
+	InvalidOTP,
 }

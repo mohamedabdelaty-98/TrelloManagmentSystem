@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TrelloManagmentSystem.Data;
@@ -27,6 +28,13 @@ namespace TrelloManagmentSystem
             }).InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof (GenericRepositories<>)).As(typeof(IGenericRepositories<>));
-        }
+
+
+ 
+			builder.Register(context => new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<Profiles>();
+			}).CreateMapper()).As<IMapper>().InstancePerLifetimeScope();
+		}
     }
 }
