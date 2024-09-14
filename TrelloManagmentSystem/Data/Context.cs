@@ -18,6 +18,8 @@ namespace TrelloManagmentSystem.Data
         }
         public DbSet<Tasks> Tasks { get; set; }
 		public DbSet<Project> Project { get; set; }
+        //public int MyProperty { get; set; }
+
     }
 
 }
